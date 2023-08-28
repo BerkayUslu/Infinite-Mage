@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f79bffa39eca4dfdaf2443f6d0415e9, type: 3}
+  m_Name: OrcCampSettings
+  m_EditorClassIdentifier: 
+  enemyPrefabToSpawn: {fileID: 100050, guid: aad05534a7ba0dd49b8c54ce188308ec, type: 3}
+  campPrefab: {fileID: 8611038158373876702, guid: ed9d69feedc6d4f2c83b6dc9d3577f65, type: 3}
+  campVisionRadius: 20
+  enemySpawnInterval: 5
+  numberOfEnemiesSpawnedPerInterval: 1
