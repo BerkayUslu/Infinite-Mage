@@ -17,7 +17,7 @@ public class EnemyCampManager : MonoBehaviour
 
     private void SpawnCamp()
     {
-        GameObject camp = Instantiate(_enemyCampSettingSO.campPrefab, Vector3.zero, Quaternion.identity);
+        GameObject camp = Instantiate(_enemyCampSettingSO.campPrefab, Vector3.zero, _enemyCampSettingSO.campPrefab.transform.rotation);
         EnemyCamp temp = camp.GetComponent<EnemyCamp>();
         temp.SetVariables(_enemyCampSettingSO, _playerTransform);
         temp.CampSpottedPlayer += PlayerSpotted;

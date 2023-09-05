@@ -46,7 +46,7 @@ public class EnemyCamp : MonoBehaviour
         _nextSpawnTime = Time.time + _enemyCampSettingSO.enemySpawnInterval;
         for(int i = 0; i < 1; i++)
         {
-            Instantiate(_enemyCampSettingSO.enemyPrefabToSpawn, _transform.position, Quaternion.identity);
+            Instantiate(_enemyCampSettingSO.enemySettings.enemyPrefab, new Vector3(0, -0.42f, 0), Quaternion.identity);
         }
     }
 

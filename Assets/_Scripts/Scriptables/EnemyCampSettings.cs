@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyCampSettings", menuName = "ScriptableObjects/Enemy/Enemy Camp Settings")]
 public class EnemyCampSettings : ScriptableObject
 {
-    public GameObject enemyPrefabToSpawn;
+    public EnemySettings enemySettings; 
     public GameObject campPrefab;
     public int campVisionRadius;
     public float enemySpawnInterval;

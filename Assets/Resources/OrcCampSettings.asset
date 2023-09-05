@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f79bffa39eca4dfdaf2443f6d0415e9, type: 3}
   m_Name: OrcCampSettings
   m_EditorClassIdentifier: 
-  enemyPrefabToSpawn: {fileID: 100050, guid: aad05534a7ba0dd49b8c54ce188308ec, type: 3}
+  enemySettings: {fileID: 11400000, guid: 400a6e5a146f64c45ba84a3a7180d996, type: 2}
   campPrefab: {fileID: 8611038158373876702, guid: ed9d69feedc6d4f2c83b6dc9d3577f65, type: 3}
-  campVisionRadius: 20
+  campVisionRadius: 30
   enemySpawnInterval: 5
-  numberOfEnemiesSpawnedPerInterval: 1
+  numberOfEnemiesSpawnedPerInterval: 5
