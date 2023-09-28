@@ -7,6 +7,6 @@ public class PlayerCharacterSettings : ScriptableObject
 {
     public int playerHealth;
     public int playerDamage;
-    public float playerbaseSkillCooldown;
+    public int playerbaseSkillCooldown;
     public float playerSpeed; 
 }

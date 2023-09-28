@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: OrcSettings
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 100050, guid: aad05534a7ba0dd49b8c54ce188308ec, type: 3}
+  enemyName: Orc
+  enemyAttackInterval: 1.333
   enemyVisionRadius: 20
+  enemyAttackRadius: 4.5
   enemyHealth: 10
   enemyDamage: 5
-  enemySpeed: 0.6
+  enemySpeed: 0.45
+  experience: 100
+  damageIncreaseWithLevel: 2
+  healthIncreaseWithLevel: 10

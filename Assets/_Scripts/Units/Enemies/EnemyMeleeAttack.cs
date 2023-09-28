@@ -6,25 +6,32 @@ public class EnemyMeleeAttack : MonoBehaviour
 {
     [SerializeField] EnemySettings _enemySettings;
     private IDamageable _damageable;
-    private float attackTime = 1;
     private float lastAttackTime;
-    private bool isItAttacking;
+    private bool isAttacking;
+
+    private float _attackStartTime;
 
     private void FixedUpdate()
     {
-        if (!isItAttacking || (Time.time-lastAttackTime < attackTime)) return;
+
+        if (!isAttacking || (Time.time - lastAttackTime < _enemySettings.enemyAttackInterval) || (Time.time - _attackStartTime < _enemySettings.enemyAttackInterval)) return;
         lastAttackTime = Time.time;
         _damageable.TakeDamage(_enemySettings.enemyDamage);
 
     }
     public void StartAttack(IDamageable damagable)
     {
+        if (!isAttacking)
+        {
+            _attackStartTime = Time.time;
+        }
         _damageable = damagable;
-        isItAttacking = true;
+        isAttacking = true;
     }
 
     public void StopAttack()
     {
-        isItAttacking = false;
+        isAttacking = false;
     }
+
 }

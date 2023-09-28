@@ -5,18 +5,25 @@ using UnityEngine;
 
 public class EnemyCamp : MonoBehaviour
 {
+    //champion
+    //spawn, while spawning share the level
+    //vision share
+
     private EnemyCampSettings _enemyCampSettingSO;
     private Transform _transform;
     private Transform _playerTransform;
     public Action<Vector3> CampSpottedPlayer;
+    private EnemySpawnPool _enemySpawnPool;
     private bool playerInVision = false;
     private float _nextSpawnTime;
     private Coroutine campWatchCoroutine;
 
+    private Vector3 _spawnDistanceVector = new Vector3(1, 0, 1);
+
     private void OnEnable()
     {
         if (_enemyCampSettingSO == null) return;
-        campWatchCoroutine = StartCoroutine("CheckPlayerDistanceAndAlertSpawnsCoroutine");
+        campWatchCoroutine = StartCoroutine("CheckPlayerDistanceAndStartSpawningCoroutine");
     }
 
     private void OnDisable()
@@ -31,8 +38,9 @@ public class EnemyCamp : MonoBehaviour
 
     private void Start()
     {
+        _enemySpawnPool = FindAnyObjectByType<EnemySpawnPool>();
         if (campWatchCoroutine != null) return;
-        campWatchCoroutine = StartCoroutine("CheckPlayerDistanceAndAlertSpawnsCoroutine");
+        campWatchCoroutine = StartCoroutine("CheckPlayerDistanceAndStartSpawningCoroutine");
     }
 
     private void Update()
@@ -44,13 +52,15 @@ public class EnemyCamp : MonoBehaviour
     private void SpawnMobs()
     {
         _nextSpawnTime = Time.time + _enemyCampSettingSO.enemySpawnInterval;
-        for(int i = 0; i < 1; i++)
+        for(int i = 0; i < _enemyCampSettingSO.numberOfEnemiesSpawnedPerInterval ; i++)
         {
-            Instantiate(_enemyCampSettingSO.enemySettings.enemyPrefab, new Vector3(0, -0.42f, 0), Quaternion.identity);
+            GameObject spawn = _enemySpawnPool.GetPooledObjectOrCreateIfNotAvailable(_enemyCampSettingSO.enemySettings.enemyPrefab, _enemyCampSettingSO.enemySettings.enemyName);
+            spawn.transform.position = _transform.position + UnityEngine.Random.Range(-1f, 1f) * _spawnDistanceVector;
+            spawn.SetActive(true);
         }
     }
 
-    private IEnumerator CheckPlayerDistanceAndAlertSpawnsCoroutine()
+    private IEnumerator CheckPlayerDistanceAndStartSpawningCoroutine()
     {
         while (true)
         {

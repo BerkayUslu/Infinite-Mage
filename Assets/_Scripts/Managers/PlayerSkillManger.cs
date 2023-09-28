@@ -9,7 +9,8 @@ public class PlayerSkillManger : MonoBehaviour
 
     private void Awake()
     {
-        _playerSkillsComponent = FindObjectOfType<PlayerSkills>(); 
+        _playerSkillsComponent = FindObjectOfType<PlayerSkills>();
+        _skillList = new List<Skill>();
     }
 
     private void Start()
@@ -29,7 +30,7 @@ public class PlayerSkillManger : MonoBehaviour
             {
                 if(skill._level == 0)
                 {
-                    // send message to the player skills script about new skill
+                    _playerSkillsComponent.AddNewSkillToCast(skill);
                 }
                 skill.SkillLevelUp();
             }
@@ -67,7 +68,8 @@ public class Skill
     public void SkillLevelUp()
     {
         _level++;
-        _damage += (int)(_damage * (_skillSettings.damageIncreasePrecentageWithLevel / 100));
-        _cooldownTime -= _cooldownTime * _skillSettings.cooldownDecreasePrecentageWithLevel;
+        if (_level == 1) return;
+        _damage += _skillSettings.damageIncreaseWithLevel;
+        _cooldownTime -= _cooldownTime * _skillSettings.cooldownDecreasePrecentageWithLevel / 100;
     }
 }

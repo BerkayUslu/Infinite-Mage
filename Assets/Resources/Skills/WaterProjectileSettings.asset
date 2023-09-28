@@ -17,5 +17,5 @@ MonoBehaviour:
   skillName: Water Projectile
   baseDamage: 5
   baseCooldown: 1.5
-  damageIncreasePrecentageWithLevel: 10
+  damageIncreaseWithLevel: 1
   cooldownDecreasePrecentageWithLevel: 5

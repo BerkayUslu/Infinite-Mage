@@ -4,20 +4,48 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    [SerializeField] PlayerCharacterSettings _playerSettingsSO;
+    private PlayerLevelAndStats _playerStats;
     private bool _playerDied;
-    public int _health;
+    private int _totalHealth;
+    private int _currentHealth;
 
     private void Awake()
     {
-        _health = _playerSettingsSO.playerHealth;
-        if (_health <= 0) _playerDied = true;
+        _playerStats = GetComponent<PlayerLevelAndStats>();
     }
+
+    private void Start()
+    {
+        SetTotalHealth();
+        _currentHealth = _totalHealth;
+        _playerStats.StatChanged += SetTotalHealth;
+    }
+
     public void TakeDamage(int damage)
     {
-        _health -= damage;
-
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
+        {
+            Debug.Log("Player Died");
+            _playerDied = true;
+        }
     }
+
+    private void SetTotalHealth()
+    {
+        _totalHealth = _playerStats.GetHealthStat();
+    }
+
+    public int GetCurrentHealth()
+    {
+        return _currentHealth;
+    }
+
+    public int GetTotalHealth()
+    {
+        return _totalHealth;
+    }
+
     public bool IsPlayerDead()
     {
         return _playerDied;

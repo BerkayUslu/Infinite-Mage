@@ -6,25 +6,46 @@ public class EnemyMovement : MonoBehaviour
 {
     private Transform _transform;
     private Rigidbody _rb;
+    private Enemy _enemy;
     private Vector3 _playerLastSeenPosition;
     private bool SawThePlayer = false;
+    private EnemyMeleeAttack _enemyMeleeAttack;
+    private Coroutine _visionCoroutine;
     [SerializeField] EnemySettings enemySettings;
 
     private void Awake()
     {
         _transform = transform;
+        _enemy = GetComponent<Enemy>();
         _rb = GetComponent<Rigidbody>();
+        _enemyMeleeAttack = GetComponent<EnemyMeleeAttack>();
     }
 
+    private void OnDisable()
+    {
+        SawThePlayer = false;
+        _rb.velocity = Vector3.zero;
+        StopCoroutine(_visionCoroutine);
+    }
+    private void OnEnable()
+    {
+          _visionCoroutine = StartCoroutine("EnemyVisionCoroutine");
+    }
     private void Start()
     {
-        StartCoroutine("EnemyVisionCoroutine");
+        if (_visionCoroutine == null) return;
+        _visionCoroutine = StartCoroutine("EnemyVisionCoroutine");
     }
 
     private void Update()
     {
+        if (_enemy.IsItDead()) { _rb.velocity = Vector3.zero; return; }
         Rotate();
-        if (!SawThePlayer) return;
+        if (!SawThePlayer || _enemy.IsItAttacking())
+        {
+            _rb.velocity = Vector3.zero;
+            return;
+        } 
         Walk();
     }
 

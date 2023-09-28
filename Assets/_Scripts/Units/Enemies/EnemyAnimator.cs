@@ -31,10 +31,17 @@ public class EnemyAnimator : MonoBehaviour
         {
             return Death;
         }
+        else if (_enemy.IsItAttacking())
+        {
+            return Attack;
+        }
+        else if(_rb.velocity == Vector3.zero)
+        {
+            return Idle;
+        }
         else
         {
-            if (_rb.velocity == Vector3.zero) return Idle;
-            return _enemy.IsItAttacking() ? Attack : Run;
+            return Run;
         }
     }
 

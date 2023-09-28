@@ -5,17 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Range(1, 10)]
-    [SerializeField] float _playerMovementSpeed = 10;
+    private float _playerMovementSpeed;
     private Rigidbody _rb;
+    private PlayerLevelAndStats _playerStats;
     private Transform _transform;
     private Vector2 _movementInputVector2;
     private Vector3 _movementDirectionVector3;
 
     private void Awake()
     {
+        _playerStats = GetComponent<PlayerLevelAndStats>();
         _rb = GetComponent<Rigidbody>();
         _transform = transform;
+    }
+
+    private void Start()
+    {
+        SetMovementSpeed();
+        _playerStats.StatChanged = SetMovementSpeed;
     }
 
     private void FixedUpdate()
@@ -27,6 +34,11 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _movementDirectionVector3 = new Vector3(_movementInputVector2.x, 0, _movementInputVector2.y);
+    }
+
+    private void SetMovementSpeed()
+    {
+        _playerMovementSpeed = _playerStats.GetSpeedStat();
     }
 
     private void Rotate()

@@ -30,9 +30,17 @@ namespace snail
 
     static class ManageGame
     {
-        public static void TogglePause()
+        public static void PauseGame(bool a)
         {
-            Time.timeScale = Time.timeScale == 1 ? 0f : 1f;
+            Time.timeScale = a ? 0f : 1f;
+        }
+    }
+
+    static class CustomMath
+    {
+        public static Vector3 ElementwiseVectorMultiply(this Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
         }
     }
 

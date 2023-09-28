@@ -10,7 +10,7 @@ public class PlayerSkillSettings : ScriptableObject
     public string skillName;
     public int baseDamage;
     public float baseCooldown;
-    public float damageIncreasePrecentageWithLevel;
+    public int damageIncreaseWithLevel;
     public float cooldownDecreasePrecentageWithLevel;
 
     public enum SkillTypes
