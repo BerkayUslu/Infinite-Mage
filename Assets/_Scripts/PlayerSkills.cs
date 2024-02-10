@@ -22,8 +22,8 @@ public class PlayerSkills : MonoBehaviour
 
     private void Start()
     {
-        SetDamageCooldownStats();
-        _playerStats.StatChanged += SetDamageCooldownStats;
+        GetDamageAndCooldownStats();
+        _playerStats.StatChanged += GetDamageAndCooldownStats;
     }
 
     public void AddNewSkillToCast(Skill skill)
@@ -32,7 +32,7 @@ public class PlayerSkills : MonoBehaviour
         debugSkillList.Add(skill);
     }
 
-    private void SetDamageCooldownStats()
+    private void GetDamageAndCooldownStats()
     {
         _playerDamageStat = _playerStats.GetDamageStat();
         _playerCooldownStat = _playerStats.GetCooldownStat();

@@ -20,6 +20,10 @@ public class PlayerSkillManger : MonoBehaviour
         {
             _skillList.Add(new Skill(playerSkillSettings));
         }
+
+        //starts skill
+        SkillLevelUp("Water Projectile");
+
     }
 
     public void SkillLevelUp(string skillName)
@@ -37,17 +41,6 @@ public class PlayerSkillManger : MonoBehaviour
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 [System.Serializable]

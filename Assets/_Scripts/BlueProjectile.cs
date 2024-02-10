@@ -52,7 +52,7 @@ public class BlueProjectile : MonoBehaviour, IProjectile
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) return;
-        other.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
+        other.gameObject.GetComponentInParent<IDamageable>()?.TakeDamage(_damage);
         Destroy(gameObject);
     }
 

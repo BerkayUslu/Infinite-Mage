@@ -21,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        SetMovementSpeed();
-        _playerStats.StatChanged = SetMovementSpeed;
+        GetMovementSpeed();
+        _playerStats.StatChanged += GetMovementSpeed;
     }
 
     private void FixedUpdate()
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         _movementDirectionVector3 = new Vector3(_movementInputVector2.x, 0, _movementInputVector2.y);
     }
 
-    private void SetMovementSpeed()
+    private void GetMovementSpeed()
     {
         _playerMovementSpeed = _playerStats.GetSpeedStat();
     }
