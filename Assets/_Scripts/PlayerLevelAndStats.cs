@@ -18,6 +18,7 @@ public class PlayerLevelAndStats : MonoBehaviour
     [SerializeField] int _playerLevel;
     [SerializeReference] int _experiencePoints;
     private GameObject _statUI;
+    private PlayerHealth _playerHealth;
 
     [SerializeField] int _neededExperienceToLevelUp;
 
@@ -38,7 +39,7 @@ public class PlayerLevelAndStats : MonoBehaviour
 
     private void Awake()
     {
-        //delete this before build
+        _playerHealth = GetComponent<PlayerHealth>();
         PlayerPrefs.DeleteAll();
         LoadPlayerStats();
         CalculateAndSetNeededExperienceToLevelUp();
@@ -51,6 +52,7 @@ public class PlayerLevelAndStats : MonoBehaviour
     public void GainExperience(int experiencePoints)
     {
         _experiencePoints += experiencePoints;
+        _playerHealth.GainHealth();
         CheckPlayerExperienceAndLevelUp();
     }
 

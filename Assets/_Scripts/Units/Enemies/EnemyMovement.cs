@@ -4,76 +4,44 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private Transform _transform;
+    [SerializeField] float _enemySpeed = 0.01f;
     private Rigidbody _rb;
-    private Enemy _enemy;
-    private Vector3 _playerLastSeenPosition;
-    private bool SawThePlayer = false;
-    private EnemyMeleeAttack _enemyMeleeAttack;
-    private Coroutine _visionCoroutine;
-    [SerializeField] EnemySettings enemySettings;
+    private Transform _transform;
+    private Vector3 _directionVector;
+    private Transform _playetTransform;
+    private Vector3 _directionAdjustmentVector = Vector3.forward + Vector3.right;
 
-    private void Awake()
-    {
-        _transform = transform;
-        _enemy = GetComponent<Enemy>();
-        _rb = GetComponent<Rigidbody>();
-        _enemyMeleeAttack = GetComponent<EnemyMeleeAttack>();
-    }
-
-    private void OnDisable()
-    {
-        SawThePlayer = false;
-        _rb.velocity = Vector3.zero;
-        StopCoroutine(_visionCoroutine);
-    }
-    private void OnEnable()
-    {
-          _visionCoroutine = StartCoroutine("EnemyVisionCoroutine");
-    }
     private void Start()
     {
-        if (_visionCoroutine == null) return;
-        _visionCoroutine = StartCoroutine("EnemyVisionCoroutine");
+        _rb = GetComponent<Rigidbody>();
+        _transform = transform;
+        UpdateDirectionVector();
     }
 
     private void Update()
     {
-        if (_enemy.IsItDead()) { _rb.velocity = Vector3.zero; return; }
-        Rotate();
-        if (!SawThePlayer || _enemy.IsItAttacking())
-        {
-            _rb.velocity = Vector3.zero;
+        UpdateDirectionVector();
+        RotationUpdate();
+        if (Time.timeScale == 0)
             return;
-        } 
-        Walk();
+        _rb.AddForce(_directionVector * _enemySpeed);
     }
 
-    private void Walk()
+    private void UpdateDirectionVector()
     {
-        Vector3 walkDirection = _playerLastSeenPosition - _transform.position;
-        _rb.velocity = walkDirection * enemySettings.enemySpeed;
+        _directionVector = _playetTransform.position - _transform.position;
+        _directionVector = Vector3.Scale(_directionVector, _directionAdjustmentVector).normalized;
     }
 
-    private void Rotate()
+    private void RotationUpdate()
     {
-        Vector3 walkDirection = _playerLastSeenPosition - _transform.position;
-        if (walkDirection == Vector3.zero) return;
-        Quaternion lookRotation = Quaternion.LookRotation(walkDirection);
-        _transform.rotation = lookRotation;
+        Quaternion lookRotation = Quaternion.LookRotation(_directionVector, Vector3.up);
+        _transform.rotation = Quaternion.Slerp(_transform.rotation,lookRotation, 0.2f);
     }
 
-    private IEnumerator EnemyVisionCoroutine()
+    public void SetPlayerTransform(Transform transform)
     {
-        while (true)
-        {
-            Collider[] colliders = Physics.OverlapSphere(_transform.position, enemySettings.enemyVisionRadius, LayerMask.GetMask("Player"));
-            foreach(Collider collider in colliders)
-            {
-                SawThePlayer = true;
-                _playerLastSeenPosition = collider.transform.position;
-            }
-            yield return new WaitForSeconds(0.05f);
-        }
+        _playetTransform = transform;
     }
+
 }

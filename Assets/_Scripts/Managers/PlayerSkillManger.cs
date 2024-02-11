@@ -6,6 +6,7 @@ public class PlayerSkillManger : MonoBehaviour
 {
     private  List<Skill> _skillList;
     private PlayerSkills _playerSkillsComponent;
+    [SerializeField] PlayerSkillSettings _waterProjectile;
 
     private void Awake()
     {
@@ -15,11 +16,7 @@ public class PlayerSkillManger : MonoBehaviour
 
     private void Start()
     {
-        PlayerSkillSettings[]  _skillSicriptableObjectsArray = snail.SearchAssets.SearchAssetsForScriptableObjectInstances<PlayerSkillSettings>();
-        foreach(PlayerSkillSettings playerSkillSettings in _skillSicriptableObjectsArray)
-        {
-            _skillList.Add(new Skill(playerSkillSettings));
-        }
+        _skillList.Add(new Skill(_waterProjectile));
 
         //starts skill
         SkillLevelUp("Water Projectile");

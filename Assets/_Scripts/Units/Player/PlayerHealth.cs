@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     private PlayerLevelAndStats _playerStats;
+    [SerializeField] GameObject _gameOverUI;
+    [SerializeField] GameObject _gameplayUI;
     private bool _playerDied;
     private int _totalHealth;
     private int _currentHealth;
@@ -26,14 +28,23 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
-            Debug.Log("Player Died");
             _playerDied = true;
+            _gameOverUI.SetActive(true);
+            _gameplayUI.SetActive(false);
+            snail.ManageGame.PauseGame(true);
         }
     }
 
     private void SetTotalHealth()
     {
         _totalHealth = _playerStats.GetHealthStat();
+    }
+
+    public void GainHealth()
+    {
+        if (_currentHealth >= _totalHealth)
+            return;
+        _currentHealth++;
     }
 
     public int GetCurrentHealth()

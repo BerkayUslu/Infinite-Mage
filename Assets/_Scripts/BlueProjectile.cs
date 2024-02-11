@@ -38,7 +38,7 @@ public class BlueProjectile : MonoBehaviour, IProjectile
         if (_directionSetFlag)
         {
             _transform.Translate(_projectileDirection * Time.deltaTime * _projectileSpeed);
-            if(_projectileSpeed > 3)
+            if(_projectileSpeed > 3.5f)
             {
                 _projectileSpeed -= 0.02f;
             }

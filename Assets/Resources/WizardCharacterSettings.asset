@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WizardCharacterSettings
   m_EditorClassIdentifier: 
   playerHealth: 50
-  playerDamage: 5
+  playerDamage: 0
   playerbaseSkillCooldown: 0
   playerSpeed: 8

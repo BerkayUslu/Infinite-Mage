@@ -8,12 +8,14 @@ public class PlayerSkills : MonoBehaviour
     private int _playerCooldownStat;
     private Transform _transform;
     private PlayerLevelAndStats _playerStats;
+    private PlayerHealth _playerHealth;
     private Vector3 _directionAdjustemntVector;
 
     private List<Skill> debugSkillList;
 
     private void Awake()
     {
+        _playerHealth = GetComponent<PlayerHealth>();
         debugSkillList = new List<Skill>();
         _playerStats = GetComponent<PlayerLevelAndStats>();
         _transform = transform;
@@ -24,6 +26,12 @@ public class PlayerSkills : MonoBehaviour
     {
         GetDamageAndCooldownStats();
         _playerStats.StatChanged += GetDamageAndCooldownStats;
+    }
+
+    private void Update()
+    {
+        if (_playerHealth.IsPlayerDead())
+            StopAllCoroutines();
     }
 
     public void AddNewSkillToCast(Skill skill)
