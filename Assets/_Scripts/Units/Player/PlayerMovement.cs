@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rb;
     private PlayerLevelAndStats _playerStats;
     private Transform _transform;
+    [SerializeField] OnScreenJoystick _joystick;
     private Vector2 _movementInputVector2;
     private Vector3 _movementDirectionVector3;
 
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        _movementInputVector2 = _joystick.GetJoyStickInput();
         _movementDirectionVector3 = new Vector3(_movementInputVector2.x, 0, _movementInputVector2.y);
     }
 
@@ -52,5 +54,5 @@ public class PlayerMovement : MonoBehaviour
         _rb.velocity = _movementDirectionVector3 * _playerMovementSpeed;
     }
 
-    public void GetMovementInput(InputAction.CallbackContext context) { _movementInputVector2 = context.ReadValue<Vector2>(); }
+
 }
