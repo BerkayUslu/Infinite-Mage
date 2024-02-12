@@ -1,4 +1,4 @@
-# SnowyHills
+# Infinite Mage
 <h3>How To Play</h3>
 <ul>
   <li>
