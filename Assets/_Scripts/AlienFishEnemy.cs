@@ -70,4 +70,9 @@ public class AlienFishEnemy : MonoBehaviour, IDamageable
         _playerExperienceClass = experienceClass;
     }
 
+    public void ModifyExperiencePoints(int modification)
+    {
+        _experiencePoints += modification;
+    }
+
 }

@@ -16,6 +16,8 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField] int _spawnAmountModifier = 0;
     [SerializeField] int _spawnAmountModificationTriggerTime = 10;
 
+    [SerializeField] int _experiencePointsModification = 0;
+
     [SerializeField] int _spawnHealthModification = 0;
     [SerializeField] float _healthModificationInterval = 60;
     [SerializeField] float _lastHealthModificationTime = 0;
@@ -55,7 +57,8 @@ public class EnemySpawnManager : MonoBehaviour
         {
             _lastHealthModificationTime = Time.time;
 
-            _spawnHealthModification += 10;
+            _spawnHealthModification += 6;
+            _experiencePointsModification += 25;
         }
     }
 
@@ -90,6 +93,7 @@ public class EnemySpawnManager : MonoBehaviour
             AlienFishEnemy tempEnemyFish = tempEnemy.GetComponent<AlienFishEnemy>();
             tempEnemyFish.SetHealthModification(_spawnHealthModification);
             tempEnemyFish.SetPlayerExperienceClass(_playerExperienceClass);
+            tempEnemyFish.ModifyExperiencePoints(_experiencePointsModification);
         }
     }
 

@@ -1,16 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlueProjectile : MonoBehaviour, IProjectile
 {
     private Vector3 _projectileDirection;
     private bool _directionSetFlag;
-    private float _projectileSpeed = 15;
+    private float _projectileSpeed = 20;
     private int _damage;
     private Transform _transform;
 
+    private bool _isCollided = false;
+    private float _collisionTime;
+
     private float _birthTime;
+
+    private void OnEnable()
+    {
+        _birthTime = Time.time;
+
+    }
 
     private void Awake()
     {
@@ -38,12 +48,16 @@ public class BlueProjectile : MonoBehaviour, IProjectile
         if (_directionSetFlag)
         {
             _transform.Translate(_projectileDirection * Time.deltaTime * _projectileSpeed);
-            if(_projectileSpeed > 3.5f)
+            if (_projectileSpeed > 3.5f)
             {
                 _projectileSpeed -= 0.02f;
             }
         }
-        if(Time.time > _birthTime + 5)
+        if (Time.time > _birthTime + 10)
+        {
+            Destroy(gameObject);
+        }
+        if(_isCollided && (_collisionTime + 0.25f < Time.time))
         {
             Destroy(gameObject);
         }
@@ -53,8 +67,10 @@ public class BlueProjectile : MonoBehaviour, IProjectile
     {
         if (other.isTrigger) return;
         other.gameObject.GetComponentInParent<IDamageable>()?.TakeDamage(_damage);
-        Destroy(gameObject);
+        _isCollided = true;
+        _collisionTime = Time.time;
     }
+
 
 
 }

@@ -24,7 +24,7 @@ public class EnemyMovement : MonoBehaviour
         RotationUpdate();
         if (Time.timeScale == 0)
             return;
-        _rb.AddForce(_directionVector * _enemySpeed);
+        _rb.AddForce(_directionVector * _enemySpeed * Time.deltaTime);
     }
 
     private void UpdateDirectionVector()
